@@ -1,0 +1,32 @@
+[[keybinds]]
+key = "F"
+[keybinds.command]
+command = "ToggleFreecam"
+
+[[keybinds]]
+key = "H"
+[keybinds.command]
+command = "ToggleHUD"
+
+[[keybinds]]
+key = "T"
+[keybinds.command]
+command = "ToggleTime"
+
+[[keybinds]]
+key = "1"
+[keybinds.command]
+command = "SetTimeMultiplier"
+multiplier = 0.1
+
+[[keybinds]]
+key = "5"
+[keybinds.command]
+command = "SetTimeMultiplier"
+multiplier = 0.5
+
+[[keybinds]]
+key = "P"
+[keybinds.command]
+command = "SetTimeMultiplier"
+multiplier = 0.0

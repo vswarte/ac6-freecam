@@ -1,0 +1,29 @@
+[package]
+name = "ac6_freecam"
+version = "0.0.1"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+log = "0.4.1"
+serde = "1.0.160"
+toml = "0.7.1"
+broadsword = { git = "https://github.com/vswarte/broadsword.git" }
+detour = { git = "https://github.com/veeenu/detour-rs.git", branch = "master" }
+winput = { version = "0.2", features = ["message_loop"] }
+
+[profile.release]
+strip = true
+lto = true
+codegen-units = 1
+opt-level = "z"
+
+[dependencies.windows]
+version = "0.51"
+features = [ 
+    "Win32_Foundation",
+    "Win32_UI_Input_KeyboardAndMouse",
+    "Win32_UI_WindowsAndMessaging",
+]
