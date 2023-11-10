@@ -65,3 +65,6 @@ Where `key` specifies the key press that should trigger a given `command`.
 ```
 // TODO: write a proper table or something?
 ```
+
+## Thanks!
+- Dasaav for pointing me to the camera movement vftable

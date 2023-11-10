@@ -1,32 +1,60 @@
+# Toggles the freecam on and off
 [[keybinds]]
 key = "F"
 [keybinds.command]
 command = "ToggleFreecam"
 
+# Toggles the HUD
 [[keybinds]]
 key = "H"
 [keybinds.command]
 command = "ToggleHUD"
 
+# Toggles time control
 [[keybinds]]
 key = "T"
 [keybinds.command]
-command = "ToggleTime"
+command = "ToggleTimeControl"
 
+# Sets the game speed to 10% of its original
 [[keybinds]]
 key = "1"
 [keybinds.command]
 command = "SetTimeMultiplier"
 multiplier = 0.1
 
+# Sets the game speed to 50% of its original
 [[keybinds]]
 key = "5"
 [keybinds.command]
 command = "SetTimeMultiplier"
 multiplier = 0.5
 
+# Sets the game speed to its original pace
+[[keybinds]]
+key = "0"
+[keybinds.command]
+command = "SetTimeMultiplier"
+multiplier = 1.0
+
+# Sets the game speed to 0.001% of its original.
+# Don't use 0.0 because I am dividing with this.
 [[keybinds]]
 key = "P"
 [keybinds.command]
 command = "SetTimeMultiplier"
-multiplier = 0.0
+multiplier = 0.001
+
+# Sets the camera movement to its original speed
+[[keybinds]]
+key = "C"
+[keybinds.command]
+command = "SetCameraSpeedMultiplier"
+multiplier = 1.0
+
+# Sets the camera movement to 10 times its original speed
+[[keybinds]]
+key = "8"
+[keybinds.command]
+command = "SetCameraSpeedMultiplier"
+multiplier = 10.0

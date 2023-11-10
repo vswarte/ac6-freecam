@@ -34,7 +34,6 @@ unsafe fn entry(_: usize) -> bool {
                     config::KeybindCommand::ToggleFreecam => toggle_freecam(),
                     config::KeybindCommand::SetTimeMultiplier{multiplier} => game::GLOBAL_TIME_MULTIPLIER = multiplier.clone(),
                     config::KeybindCommand::SetCameraSpeedMultiplier{multiplier} => game::CAMERA_SPEED_MULTIPLIER = multiplier.clone(),
-                    _ => todo!("Implement this command :fatcat:"),
                 }
             }
         }
