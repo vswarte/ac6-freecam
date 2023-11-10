@@ -1,4 +1,5 @@
 #![feature(absolute_path)]
+#![recursion_limit = "128"]
 
 use std::mem;
 
@@ -9,18 +10,6 @@ mod config;
 
 use broadsword::dll;
 use detour::static_detour;
-
-static_detour! {
-    // Function that seems to update the delta time between frames. Patching the values seemingly
-    // affects all simulation, from VFX timelines to gravity.
-    static FLIPPER_UPDATE_HOOK: fn(*mut game::CSFlipperImp);
-
-    // Function that seems to flush scaleform framebuffers onto the final, rendered, framebuffer.
-    static SCALEFORM_UPDATE_B_HOOK: fn();
-
-    // Seemingly a getter for the freecam debug option
-    static FREECAM_DEBUG_FLAG_HOOK: fn() -> bool;
-}
 
 #[dll::entrypoint]
 unsafe fn entry(_: usize) -> bool {
@@ -44,6 +33,7 @@ unsafe fn entry(_: usize) -> bool {
                     config::KeybindCommand::ToggleTimeControl => toggle_timecontrol(),
                     config::KeybindCommand::ToggleFreecam => toggle_freecam(),
                     config::KeybindCommand::SetTimeMultiplier{multiplier} => game::GLOBAL_TIME_MULTIPLIER = multiplier.clone(),
+                    config::KeybindCommand::SetCameraSpeedMultiplier{multiplier} => game::CAMERA_SPEED_MULTIPLIER = multiplier.clone(),
                     _ => todo!("Implement this command :fatcat:"),
                 }
             }
@@ -51,6 +41,26 @@ unsafe fn entry(_: usize) -> bool {
     });
 
     return true;
+}
+
+static_detour! {
+    // Function that seems to update the delta time between frames. Patching the values seemingly
+    // affects all simulation, from VFX timelines to gravity.
+    static FLIPPER_UPDATE_HOOK: fn(*mut game::CSFlipperImp);
+
+    // Function that seems to flush scaleform framebuffers onto the final, rendered, framebuffer.
+    static SCALEFORM_UPDATE_B_HOOK: fn();
+
+    // Seemingly a getter for the freecam debug option
+    static FREECAM_DEBUG_FLAG_HOOK: fn() -> bool;
+}
+
+static_detour! {
+    static CAMERA_SPEED_HOOK_1: fn(usize, usize) -> f32;
+    static CAMERA_SPEED_HOOK_2: fn(usize, usize) -> f32;
+    static CAMERA_SPEED_HOOK_3: fn(usize, usize) -> f32;
+    static CAMERA_SPEED_HOOK_4: fn(usize, usize) -> f32;
+    static CAMERA_SPEED_HOOK_5: fn(usize, usize) -> f32;
 }
 
 unsafe fn initialize_hooks() {
@@ -72,6 +82,55 @@ unsafe fn initialize_hooks() {
         mem::transmute(game::POINTER_FREECAM_DEBUG_FLAG),
         || true
     ).unwrap();
+
+    CAMERA_SPEED_HOOK_1.initialize(
+        mem::transmute(game::POINTER_CAMERA_SPEED_HOOK_1),
+        |param_1: usize, param_2: usize| {
+            correct_camera_speed(CAMERA_SPEED_HOOK_1.call(param_1, param_2)) * game::CAMERA_SPEED_MULTIPLIER
+        }
+    ).unwrap();
+    CAMERA_SPEED_HOOK_1.enable().unwrap();
+
+    CAMERA_SPEED_HOOK_2.initialize(
+        mem::transmute(game::POINTER_CAMERA_SPEED_HOOK_2),
+        |param_1: usize, param_2: usize| {
+            correct_camera_speed(CAMERA_SPEED_HOOK_2.call(param_1, param_2)) * game::CAMERA_SPEED_MULTIPLIER
+        }
+    ).unwrap();
+    CAMERA_SPEED_HOOK_2.enable().unwrap();
+
+    CAMERA_SPEED_HOOK_3.initialize(
+        mem::transmute(game::POINTER_CAMERA_SPEED_HOOK_3),
+        |param_1: usize, param_2: usize| {
+            correct_camera_speed(CAMERA_SPEED_HOOK_3.call(param_1, param_2)) * game::CAMERA_SPEED_MULTIPLIER
+        }
+    ).unwrap();
+    CAMERA_SPEED_HOOK_3.enable().unwrap();
+
+    CAMERA_SPEED_HOOK_4.initialize(
+        mem::transmute(game::POINTER_CAMERA_SPEED_HOOK_4),
+        |param_1: usize, param_2: usize| {
+            correct_camera_speed(CAMERA_SPEED_HOOK_4.call(param_1, param_2)) * game::CAMERA_SPEED_MULTIPLIER
+        }
+    ).unwrap();
+    CAMERA_SPEED_HOOK_4.enable().unwrap();
+
+    CAMERA_SPEED_HOOK_5.initialize(
+        mem::transmute(game::POINTER_CAMERA_SPEED_HOOK_5),
+        |param_1: usize, param_2: usize| {
+            correct_camera_speed(CAMERA_SPEED_HOOK_5.call(param_1, param_2)) * game::CAMERA_SPEED_MULTIPLIER
+        }
+    ).unwrap();
+    CAMERA_SPEED_HOOK_5.enable().unwrap();
+}
+
+/// Compensate for delta time hook in the CSFlipperImp
+unsafe fn correct_camera_speed(input: f32) -> f32 {
+    if FLIPPER_UPDATE_HOOK.is_enabled() {
+        input / game::GLOBAL_TIME_MULTIPLIER
+    } else {
+        input
+    }
 }
 
 unsafe fn toggle_hud() {

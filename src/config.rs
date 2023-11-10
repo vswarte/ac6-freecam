@@ -25,6 +25,8 @@ pub enum KeybindCommand {
     ToggleTimeControl,
     ToggleFreecam,
     SetTimeMultiplier {multiplier: f32},
+    ToggleFOVControl,
+    SetCameraSpeedMultiplier {multiplier: f32},
 }
 
 pub fn get_config() -> Config {
