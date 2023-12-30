@@ -29,11 +29,16 @@ unsafe fn entry(_: usize) -> bool {
 
             for command in commands {
                 match command {
-                    config::KeybindCommand::ToggleHUD => toggle_hud(),
-                    config::KeybindCommand::ToggleTimeControl => toggle_timecontrol(),
-                    config::KeybindCommand::ToggleFreecam => toggle_freecam(),
-                    config::KeybindCommand::SetTimeMultiplier{multiplier} => game::GLOBAL_TIME_MULTIPLIER = multiplier.clone(),
-                    config::KeybindCommand::SetCameraSpeedMultiplier{multiplier} => game::CAMERA_SPEED_MULTIPLIER = multiplier.clone(),
+                    config::KeybindCommand::ToggleHUD 
+                        => toggle_hud(),
+                    config::KeybindCommand::ToggleTimeControl 
+                        => toggle_timecontrol(),
+                    config::KeybindCommand::ToggleFreecam 
+                        => toggle_freecam(),
+                    config::KeybindCommand::SetTimeMultiplier{multiplier} 
+                        => game::GLOBAL_TIME_MULTIPLIER = multiplier.clone(),
+                    config::KeybindCommand::SetCameraSpeedMultiplier{multiplier} 
+                        => game::CAMERA_SPEED_MULTIPLIER = multiplier.clone(),
                 }
             }
         }
@@ -160,20 +165,17 @@ unsafe fn toggle_freecam() {
 
 // Cursed but whatever
 unsafe fn set_freecam_enable(enabled: u8) -> bool {
-    let a = *(0x144dbed30 as *const usize);
-    log::trace!("set_freecam_enable(): a = {:x?}", a);
+    let a = *(0x144e147e8 as *const usize);
     if a as usize == 0x0 {
         return false;
     }
 
     let b = *((a + 0x20) as *const usize);
-    log::trace!("set_freecam_enable(): b = {:x?}", b);
     if b as usize == 0x0 {
         return false;
     }
 
     let c = (b + 0x134) as *mut u8;
-    log::trace!("set_freecam_enable(): c = {:x?}", c);
     if c as usize == 0x0 {
         return false;
     }

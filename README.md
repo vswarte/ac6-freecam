@@ -4,7 +4,9 @@ This is a mod that allows people to reenable the AC6 developer freecam,
 disable UI rendering and even slow-down and speed-up the game's time.
 This mod was originally made for VaatiVidya and released with their approval.
 
-Current version is for 1.03.1 through 1.04.1 exclusively.
+Current version is for 1.05.0 exclusively.
+Check out [releases](https://github.com/vswarte/ac6-freecam/releases) for 
+earlier builds.
 
 ## Installation steps
 

@@ -55,7 +55,7 @@ checksum = "bddcadddf5e9015d310179a59bb28c4d4b9920ad0f11e8e14dbadf654890c9a6"
 
 [[package]]
 name = "armoredcore6_freecam"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "broadsword",
  "detour",
