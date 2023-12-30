@@ -1,6 +1,7 @@
 pub const POINTER_FLIPPER_UPDATE: usize     = 0x141759750;
 pub const POINTER_SCALEFORM_UPDATE_B: usize = 0x1415f1c50;
 pub const POINTER_FREECAM_DEBUG_FLAG: usize = 0x145df6d00;
+pub const POINTER_SOME_RANDOM_BASE: usize   = 0x144e147e8;
 
 pub const POINTER_CAMERA_SPEED_HOOK_1: usize = 0x1416f6f00;
 pub const POINTER_CAMERA_SPEED_HOOK_2: usize = 0x1416f6f10;

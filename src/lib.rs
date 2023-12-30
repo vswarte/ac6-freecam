@@ -153,7 +153,7 @@ unsafe fn toggle_freecam() {
             log::debug!("toggle_freecam(): enabling freecam");
             FREECAM_DEBUG_FLAG_HOOK.enable().unwrap();
 
-            // TODO: copy coordinates
+            // TODO: copy coordinates from regular player camera on enter
         }
     } else {
         if set_freecam_enable(0x0) {
@@ -163,9 +163,8 @@ unsafe fn toggle_freecam() {
     }
 }
 
-// Cursed but whatever
 unsafe fn set_freecam_enable(enabled: u8) -> bool {
-    let a = *(0x144e147e8 as *const usize);
+    let a = *(game::POINTER_SOME_RANDOM_BASE as *const usize);
     if a as usize == 0x0 {
         return false;
     }
