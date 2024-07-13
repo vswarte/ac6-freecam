@@ -1,4 +1,4 @@
-# ARMORED CORE™ VI FIRES OF RUBICON™ free-camera with extras I guess
+# ARMORED CORE™ VI free-cam :camera:
 
 This is a mod that allows people to reenable the AC6 developer freecam,
 disable UI rendering and even slow-down and speed-up the game's time.
